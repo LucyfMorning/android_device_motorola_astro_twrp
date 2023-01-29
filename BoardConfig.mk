@@ -94,14 +94,11 @@ TARGET_KERNEL_HEADER_ARCH := arm64
 
 # Kernel - Prebuilt
 TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/Image.gz
-BOARD_KERNEL_IMAGE_NAME := Image.gz
 
 # Kernel - Include DTBO
-BOARD_INCLUDE_RECOVERY_DTBO := true
 BOARD_PREBUILT_DTBOIMAGE := $(DEVICE_PATH)/prebuilt/dtbo.img
 
 # Kernel - Include DTB
-BOARD_INCLUDE_DTB_IN_BOOTIMG := true
 TARGET_PREBUILD_DTB := $(DEVICE_PATH)/prebuilt/dtb.img
 BOARD_MKBOOTIMG_ARGS += \
 	--dtb $(TARGET_PREBUILD_DTB)
