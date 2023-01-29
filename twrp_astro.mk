@@ -19,6 +19,7 @@ PRODUCT_RELEASE_NAME := astro
 
 # Inherit from those products. Most specific first.
 $(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
 
 # Inherit some common TWRP stuff.
 $(call inherit-product, vendor/twrp/config/common.mk)
@@ -28,7 +29,7 @@ $(call inherit-product, device/motorola/astro/device.mk)
 
 # Device identifier. This must come after all inclusions
 PRODUCT_DEVICE := astro
-PRODUCT_NAME := twrp_$(PRODUCT_DEVICE)
+PRODUCT_NAME := twrp_astro
 PRODUCT_BRAND := motorola
 PRODUCT_MODEL := motorola one fusion
 PRODUCT_MANUFACTURER := motorola

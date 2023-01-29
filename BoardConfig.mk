@@ -14,11 +14,11 @@
 # limitations under the License.
 #
 
-
-LOCAL_PATH := device/motorola/astro
+DEVICE_PATH := device/motorola/astro
 
 # TWRP Minimal manifest
 ALLOW_MISSING_DEPENDENCIES := true
+BUILD_BROKEN_DUP_RULES := true
 
 # Bootloader
 TARGET_BOOTLOADER_BOARD_NAME := sdm710
@@ -26,37 +26,23 @@ TARGET_BOOTLOADER_BOARD_NAME := sdm710
 TARGET_NO_BOOTLOADER := true
 TARGET_USES_UEFI := true
 
-# Platform
-TARGET_BOARD_PLATFORM := sdm710
-TARGET_BOARD_PLATFORM_GPU := qcom-adreno616
-TARGET_USES_64_BIT_BINDER := true
-TARGET_SUPPORTS_64_BIT_APPS := true
-QCOM_BOARD_PLATFORMS += sdm710
-BUILD_BROKEN_DUP_RULES := true
-
 # Architecture
 TARGET_ARCH := arm64
 TARGET_ARCH_VARIANT := armv8-a
 TARGET_CPU_ABI := arm64-v8a
-TARGET_CPU_ABI2 := generic
-TARGET_CPU_VARIANT := kryo385
+TARGET_CPU_ABI2 := 
+TARGET_CPU_VARIANT := generic
+TARGET_CPU_VARIANT_RUNTIME := kryo385
 
 TARGET_2ND_ARCH := arm
-TARGET_2ND_ARCH_VARIANT := armv8-2a
+TARGET_2ND_ARCH_VARIANT := armv8-a
 TARGET_2ND_CPU_ABI := armeabi-v7a
 TARGET_2ND_CPU_ABI2 := armeabi
-TARGET_2ND_CPU_VARIANT := cortex-a75
-TARGET_BOARD_SUFFIX := _64
-
-# Enable CPUSets
-ENABLE_CPUSETS := true
-ENABLE_SCHEDBOOST := true
+TARGET_2ND_CPU_VARIANT_RUNTIME := kryo385
+TARGET_USES_64_BIT_BINDER := true
 
 # GPU Utils
 BOARD_PROVIDES_GPTUTILS := true
-
-# Decryption Qualcomm Technologies™ Common
-BOARD_USES_QCOM_FBE_DECRYPTION := true
 
 # Kernel - CMDLINE
 BOARD_KERNEL_CMDLINE := \
@@ -65,7 +51,6 @@ BOARD_KERNEL_CMDLINE := \
     androidboot.console=ttyMSM0 \
     androidboot.memcg=1 \
     lpm_levels.sleep_disabled=1 \
-    video=vfb:640x400,bpp=32,memsize=3072000 \
     msm_rtb.filter=0x237 \
     service_locator.enable=1 \
     swiotlb=1 \
@@ -108,16 +93,16 @@ TARGET_KERNEL_ARCH := arm64
 TARGET_KERNEL_HEADER_ARCH := arm64
 
 # Kernel - Prebuilt
-TARGET_PREBUILT_KERNEL := $(LOCAL_PATH)/prebuilt/Image.gz
+TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/Image.gz
 BOARD_KERNEL_IMAGE_NAME := Image.gz
 
 # Kernel - Include DTBO
 BOARD_INCLUDE_RECOVERY_DTBO := true
-BOARD_PREBUILT_DTBOIMAGE := $(LOCAL_PATH)/prebuilt/dtbo.img
+BOARD_PREBUILT_DTBOIMAGE := $(DEVICE_PATH)/prebuilt/dtbo.img
 
 # Kernel - Include DTB
 BOARD_INCLUDE_DTB_IN_BOOTIMG := true
-TARGET_PREBUILD_DTB := $(LOCAL_PATH)/prebuilt/dtb.img
+TARGET_PREBUILD_DTB := $(DEVICE_PATH)/prebuilt/dtb.img
 BOARD_MKBOOTIMG_ARGS += \
 	--dtb $(TARGET_PREBUILD_DTB)
 
@@ -150,6 +135,10 @@ TARGET_COPY_OUT_VENDOR := vendor
 TARGET_COPY_OUT_PRODUCT := product
 TARGET_USES_MKE2FS := true
 
+# Platform
+TARGET_BOARD_PLATFORM := sdm710
+QCOM_BOARD_PLATFORMS += sdm710
+
 # Recovery
 TARGET_OTA_ASSERT_DEVICE := astro
 BOARD_HAS_NO_SELECT_BUTTON := true
@@ -158,90 +147,16 @@ BOARD_SUPPRESS_SECURE_ERASE := true
 RECOVERY_SDCARD_ON_DATA := true
 USE_RECOVERY_INSTALLER := true
 RECOVERY_INSTALLER_PATH := bootable/recovery/installer
-TARGET_RECOVERY_WIPE := $(LOCAL_PATH)/recovery/root/system/etc/recovery.wipe
+TARGET_RECOVERY_WIPE := $(DEVICE_PATH)/recovery/root/system/etc/recovery.wipe
 
 BOARD_RECOVERY_KERNEL_MODULES_LOAD := \
-    $(LOCAL_PATH)/recovery/root/vendor/lib/modules/1.1/nova_0flash_mmi.ko \
-    $(LOCAL_PATH)/recovery/root/vendor/lib/modules/1.1/himax_v2_mmi.ko \
-    $(LOCAL_PATH)/recovery/root/vendor/lib/modules/1.1/himax_v2_mmi_hx83102d.ko
-
-# Recovery - Modules
-TARGET_RECOVERY_DEVICE_MODULES += \
-    android.hidl.base@1.0 \
-    ashmemd \
-    ashmemd_aidl_interface-cpp \
-    libashmemd_client \
-    libcap \
-    libicuuc \
-    libion \
-    libpcrecpp
-
-TW_RECOVERY_ADDITIONAL_RELINK_LIBRARY_FILES += \
-	$(TARGET_OUT_EXECUTABLES)/ashmemd   
-
-TW_RECOVERY_ADDITIONAL_RELINK_LIBRARY_FILES += \
-    $(TARGET_OUT_SHARED_LIBRARIES)/android.hidl.base@1.0.so \
-    $(TARGET_OUT_SHARED_LIBRARIES)/ashmemd_aidl_interface-cpp.so \
-    $(TARGET_OUT_SHARED_LIBRARIES)/libashmemd_client.so \
-    $(TARGET_OUT_SHARED_LIBRARIES)/libcap.so \
-    $(TARGET_OUT_SHARED_LIBRARIES)/libicuuc.so \
-    $(TARGET_OUT_SHARED_LIBRARIES)/libion.so \
-    $(TARGET_OUT_SHARED_LIBRARIES)/libpcrecpp.so \
+    $(DEVICE_PATH)/recovery/root/vendor/lib/modules/1.1/nova_0flash_mmi.ko \
+    $(DEVICE_PATH)/recovery/root/vendor/lib/modules/1.1/himax_v2_mmi.ko \
+    $(DEVICE_PATH)/recovery/root/vendor/lib/modules/1.1/himax_v2_mmi_hx83102d.ko
 
 # Symbolic Simlinks
 BOARD_ROOT_EXTRA_SYMLINKS := \
     /mnt/vendor/persist:/persist
 
-
-# TWRP configuration
-RECOVERY_SDCARD_ON_DATA := true
-TW_EXCLUDE_TWRPAPP := true
-TW_EXTRA_LANGUAGES := true
-TW_HAS_EDL_MODE := true
-
-# Team Win Recovery - Crypto
-TW_INCLUDE_CRYPTO := true
-TW_INCLUDE_REPACKTOOLS := true
-TW_NEW_ION_HEAP := true
-TW_USE_TOOLBOX := true
-
-
-# Team Win Recovery - Debug
-TARGET_USES_LOGD := true
-TWRP_INCLUDE_LOGCAT := true
-
-TW_INCLUDE_NTFS_3G := true
-TW_INCLUDE_FB2PNG := true
-TW_INPUT_BLACKLIST := "hbtp_vm"
-
-
-# Team Win Recovery - Display
-TW_BRIGHTNESS_PATH := "/sys/class/backlight/panel0-backlight/brightness"
-TW_CUSTOM_BATTERY_PATH := "/sys/class/power_supply/qcom_battery/"
-TW_CUSTOM_CPU_TEMP_PATH := "/sys/class/thermal/thermal_zone36/temp" # Big cores max step
-TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
-
-TW_MAX_BRIGHTNESS := 4095
-TW_DEFAULT_BRIGHTNESS := 420
-TW_THEME := portrait_hdpi
-
-TW_Y_OFFSET := 45
-TW_H_OFFSET := -44 # Fix 1 pixel 
-
-
-# Team Win Recovery - Rollback
-PLATFORM_VERSION := 16.1.0
-PLATFORM_SECURITY_PATCH := 2099-12-31
-VENDOR_SECURITY_PATCH := 2099-12-31
-
-
-# Team Win Recovery - System Props
-TW_OVERRIDE_SYSTEM_PROPS := \
-    "ro.build.fingerprint=ro.system.build.fingerprint;ro.build.version.incremental"
-
-
-# Team Win Recovery - Timezone
-TARGET_RECOVERY_QCOM_RTC_FIX := true
-
-# Team Win Recovery - USB
-TW_EXCLUDE_DEFAULT_USB_INIT := true
+# TWRP BoardConfig inherit
+include $(DEVICE_PATH)/BoardConfigTWRP.mk
